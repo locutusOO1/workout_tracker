@@ -30,14 +30,26 @@ app.get("/exercise", (req,res) => {
     res.sendFile(path.join(__dirname,"public","exercise.html"));
 });
 
-// put routes here
-// db.Workout.create({})
-//     .then(dbWorkout => {
-//         console.log(dbWorkout);
-//     })
-//     .catch(({ message }) => {
-//         console.log(message);
-//     });
+app.post("/api/workouts",({body},res) => {
+    console.log(body);
+    db.Workout.create(body)
+    .then(dbWorkout => {
+        console.log(dbWorkout);
+    })
+    .catch(({ message }) => {
+        console.log(message);
+    });
+});
+
+app.get("/api/workouts",(req,res) => {
+    db.Workout.find({})
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`App running http://localhost:${PORT}`);
