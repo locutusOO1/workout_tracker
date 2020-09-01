@@ -41,9 +41,30 @@ app.post("/api/workouts",({body},res) => {
     });
 });
 
+app.put("/api/workouts/:id",(req,res) => {
+    const _id = req.params.id;
+    const body = req.body;
+    console.log(body);
+    db.Workout.updateOne(
+        {
+            _id
+        },
+        {
+            $push: { exercises: body }
+        }
+    )
+    .then(dbWorkout => {
+        res.json(dbWorkout);
+    })
+    .catch(err => {
+        res.json(err);
+    });
+});
+
 app.get("/api/workouts",(req,res) => {
     db.Workout.find({})
     .then(dbWorkout => {
+        console.log(dbWorkout);
       res.json(dbWorkout);
     })
     .catch(err => {
