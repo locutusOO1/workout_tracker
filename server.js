@@ -18,72 +18,40 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-app.get("/", (req,res) => {
-    res.sendFile(path.join(__dirname,"public","index.html"));
-});
+app.get("/", (req,res) => res.sendFile(path.join(__dirname,"public","index.html")));
 
-app.get("/stats", (req,res) => {
-    res.sendFile(path.join(__dirname,"public","stats.html"));
-});
+app.get("/stats", (req,res) => res.sendFile(path.join(__dirname,"public","stats.html")));
 
-app.get("/exercise", (req,res) => {
-    res.sendFile(path.join(__dirname,"public","exercise.html"));
-});
+app.get("/exercise", (req,res) => res.sendFile(path.join(__dirname,"public","exercise.html")));
 
 app.post("/api/workouts",({body},res) => {
-    console.log(body);
     db.Workout.create(body)
-    .then(dbWorkout => {
-        console.log(dbWorkout);
-    })
-    .catch(({ message }) => {
-        console.log(message);
-    });
+    .then(dbWorkout => res.json(dbWorkout))
+    .catch(({ message }) => res.json(message));
 });
 
 app.put("/api/workouts/:id",(req,res) => {
     const _id = req.params.id;
     const body = req.body;
-    console.log(body);
     db.Workout.updateOne(
-        {
-            _id
-        },
-        {
-            $push: { exercises: body }
-        }
+        { _id },
+        { $push: { exercises: body } }
     )
-    .then(dbWorkout => {
-        res.json(dbWorkout);
-    })
-    .catch(err => {
-        res.json(err);
-    });
+    .then(dbWorkout => res.json(dbWorkout))
+    .catch(err => res.json(err));
 });
 
 app.get("/api/workouts",(req,res) => {
     db.Workout.find({})
-    .then(dbWorkout => {
-        console.log(dbWorkout);
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.json(err);
-    });
+    .then(dbWorkout => res.json(dbWorkout))
+    .catch(err => res.json(err));
 });
 
 app.get("/api/workouts/range",(req,res) => {
     db.Workout.find({})
-    .then(dbWorkout => {
-        console.log(dbWorkout);
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.json(err);
-    });
+    .then(dbWorkout => res.json(dbWorkout))
+    .catch(err => res.json(err));
 });
 
-app.listen(PORT, () => {
-    console.log(`App running http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`App running http://localhost:${PORT}`));
   

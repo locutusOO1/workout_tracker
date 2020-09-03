@@ -21,13 +21,21 @@ async function initWorkout() {
 
 function tallyExercises(exercises) {
   const tallied = exercises.reduce((acc, curr) => {
+    acc.totalDuration = (acc.totalDuration || 0) + (curr.duration || 0);
     if (curr.type === "resistance") {
-      acc.totalWeight = (acc.totalWeight || 0) + curr.weight;
-      acc.totalSets = (acc.totalSets || 0) + curr.sets;
-      acc.totalReps = (acc.totalReps || 0) + curr.reps;
+      console.log("type: resistance");
+      acc.totalWeight = (acc.totalWeight || 0) + (curr.weight || 0);
+      acc.totalSets = (acc.totalSets || 0) + (curr.sets || 0);
+      acc.totalReps = (acc.totalReps || 0) + (curr.reps || 0);
+      acc.totalDistance = (acc.totalDistance || 0);
     } else if (curr.type === "cardio") {
-      acc.totalDistance = (acc.totalDistance || 0) + curr.distance;
+      console.log("type: cardio");
+      acc.totalDistance = (acc.totalDistance || 0) + (curr.distance||0);
+      acc.totalWeight = (acc.totalWeight || 0);
+      acc.totalSets = (acc.totalSets || 0);
+      acc.totalReps = (acc.totalReps || 0);
     }
+    console.log(acc);
     return acc;
   }, {});
   return tallied;
