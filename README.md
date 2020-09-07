@@ -5,7 +5,7 @@
 
   ## Links:
   * [Repo](https://github.com/locutusOO1/workout_tracker)
-  * [Deployed Heroku Site]()
+  * [Deployed Heroku Site](https://young-springs-46958.herokuapp.com/)
 
   ## Table of Contents:
   * [Installation](#installation)
@@ -25,6 +25,7 @@
   * Node.js - for JS runtime environment
   * JS/ES6+ - for program logic
   * MongoDB - for DB functionality
+  * MongoDB Atlas - for DB hosting
   * Express - for serving
   * Heroku - for site and DB hosting
 
